@@ -1,0 +1,8 @@
+export const products = [
+ {name:'Original Kerala',short:'ORIGINAL',note:'The taste that started it all.',description:'Clean, delicately sweet coconut water. A little piece of the tropics, just as nature imagined it.',color:'#d7e1a8',ink:'#174b32',pair:'For slow mornings & everyday refreshment',ingredients:'Coconut water',number:'01'},
+ {name:'Tender Coconut',short:'TENDER',note:'Soft, mellow, beautifully simple.',description:'The gentle sweetness of tender coconut, with a light, rounded finish. Sunshine at a slower pace.',color:'#eee9ce',ink:'#626b36',pair:'For a quiet moment in the afternoon',ingredients:'Tender coconut water',number:'02'},
+ {name:'Coconut Lime',short:'LIME',note:'A bright little tropical twist.',description:'Refreshing coconut meets the crisp lift of lime. Bright, breezy and made for long summer days.',color:'#c6d75c',ink:'#2f532c',pair:'For sun-filled days & fresh starts',ingredients:'Coconut water · Lime',number:'03'},
+ {name:'Coconut Mango',short:'MANGO',note:'Golden days, bottled.',description:'Coconut freshness with the lush, mellow character of mango. A sun-drenched take on your daily sip.',color:'#f4bf58',ink:'#805129',pair:'For golden-hour breaks',ingredients:'Coconut water · Mango',number:'04'},
+ {name:'Coconut Pineapple',short:'PINEAPPLE',note:'Your out-of-office feeling.',description:'Light coconut water with a playful pineapple finish. Tropical, tangy and endlessly refreshing.',color:'#edd985',ink:'#656434',pair:'For picnics & a change of scenery',ingredients:'Coconut water · Pineapple',number:'05'},
+];
+export type Product = typeof products[number];
