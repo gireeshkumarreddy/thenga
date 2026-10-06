@@ -8,28 +8,32 @@ import { SoftwareRenderer } from './software-renderer';
 function labelTexture(product: Product, coconut?: HTMLImageElement, palm?: HTMLImageElement, kathakali?: HTMLImageElement) {
  const canvas=document.createElement('canvas'); canvas.width=2048; canvas.height=2048;
  const c=canvas.getContext('2d')!;
- c.fillStyle='#f6f3e8';c.fillRect(0,0,2048,2048);
- c.fillStyle=product.ink;c.fillRect(0,0,2048,130);c.fillRect(0,1940,2048,108);
+ // Deep forest body: the Kathakali artwork's dark ground melts into it.
+ const body=c.createLinearGradient(0,0,2048,0);body.addColorStop(0,'#06140d');body.addColorStop(.5,'#0f2c1d');body.addColorStop(1,'#06140d');
+ c.fillStyle=body;c.fillRect(0,0,2048,2048);
+ const glow=c.createRadialGradient(1024,1030,60,1024,1030,620);glow.addColorStop(0,'#2f6a3a66');glow.addColorStop(1,'#0f2c1d00');c.fillStyle=glow;c.fillRect(0,0,2048,2048);
+ c.fillStyle='#c9a24f';c.fillRect(0,0,2048,130);c.fillStyle='#040d08';c.fillRect(0,1940,2048,108);
  c.fillStyle=product.color;c.fillRect(0,1640,2048,300);
- c.fillStyle='#c7a45a';c.fillRect(0,135,2048,7);c.fillRect(0,1625,2048,7);c.fillRect(0,1919,2048,7);
- c.textAlign='center';c.fillStyle='#f6f3e8';c.font='500 25px "DM Sans", sans-serif';c.fillText('THE SPIRIT OF KERALA',1024,84);
- c.fillStyle=product.ink;c.font='800 177px "Barlow Condensed", sans-serif';c.fillText('THENGA',1024,357);
- c.font='500 42px "DM Sans", sans-serif';c.fillText('COCONUT WATER',1024,447);
+ c.fillStyle='#e0bd6a';c.fillRect(0,135,2048,7);c.fillRect(0,1625,2048,7);c.fillRect(0,1919,2048,7);
+ c.textAlign='center';c.fillStyle='#0a1a12';c.font='600 25px "DM Sans", sans-serif';c.fillText('THE SPIRIT OF KERALA',1024,84);
+ c.fillStyle='#f3ecd8';c.font='800 177px "Barlow Condensed", sans-serif';c.fillText('THENGA',1024,357);
+ c.fillStyle='#e0bd6a';c.font='500 42px "DM Sans", sans-serif';c.fillText('COCONUT WATER',1024,447);
  // The original Kathakali and coconut-palms illustration forms the front label.
  if(kathakali)c.drawImage(kathakali,664,490,720,1080);
  c.fillStyle=product.ink;c.font='600 74px "Barlow Condensed", sans-serif';c.fillText(product.short,1024,1775);
  c.font='400 26px "DM Sans", sans-serif';c.fillText('330 ml  ·  SERVE CHILLED',1024,1855);
+ c.fillStyle='#c9a24f';c.font='500 22px "DM Sans", sans-serif';c.fillText('GOD’S OWN COUNTRY  ·  KERALA, INDIA',1024,2000);
  // Genuine wrapped side and rear panels remain readable through the full rotation.
- if(palm){c.globalAlpha=.25;c.drawImage(palm,1430,560,590,880);c.globalAlpha=1;}
- c.textAlign='left';c.fillStyle=product.ink;c.font='600 45px "Barlow Condensed", sans-serif';c.fillText('ROOTED IN KERALA.',60,380);
- c.font='400 24px "DM Sans", sans-serif';['From coconut palms','to the colours of Kathakali.','A celebration of Kerala.','','A taste of home.','Enjoy cold. Recycle your can.'].forEach((t,i)=>c.fillText(t,60,465+i*46));
+ if(palm){c.globalAlpha=.18;c.drawImage(palm,1430,560,590,880);c.globalAlpha=1;}
+ c.textAlign='left';c.fillStyle='#e0bd6a';c.font='600 45px "Barlow Condensed", sans-serif';c.fillText('ROOTED IN KERALA.',60,380);
+ c.fillStyle='#d9d2bc';c.font='400 24px "DM Sans", sans-serif';['From coconut palms','to the colours of Kathakali.','A celebration of Kerala.','','A taste of home.','Enjoy cold. Recycle your can.'].forEach((t,i)=>c.fillText(t,60,465+i*46));
  if(coconut)c.drawImage(coconut,75,930,300,320);
  const map=new THREE.CanvasTexture(canvas);map.colorSpace=THREE.SRGBColorSpace;map.anisotropy=8;return map;
 }
 export function createCan(product:Product,coconut?:HTMLImageElement,palm?:HTMLImageElement,kathakali?:HTMLImageElement){
  const group=new THREE.Group();
  const map=labelTexture(product,coconut,palm,kathakali);
- const mat=new THREE.MeshStandardMaterial({map,roughness:.32,metalness:.18});
+ const mat=new THREE.MeshStandardMaterial({map,roughness:.28,metalness:.3});
  const points=[new THREE.Vector2(0,-1.38),new THREE.Vector2(.41,-1.38),new THREE.Vector2(.46,-1.33),new THREE.Vector2(.47,-1.26),new THREE.Vector2(.49,-1.15),new THREE.Vector2(.49,1.15),new THREE.Vector2(.455,1.26),new THREE.Vector2(.44,1.31),new THREE.Vector2(.44,1.36),new THREE.Vector2(0,1.36)];
  const geometry=new THREE.LatheGeometry(points,48);const uv=geometry.attributes.uv;const position=geometry.attributes.position;for(let i=0;i<uv.count;i++)uv.setY(i,(position.getY(i)+1.38)/2.76);const body=new THREE.Mesh(geometry,mat);body.rotation.y=Math.PI;group.add(body);
  const metal=new THREE.MeshStandardMaterial({color:'#cbd0c2',metalness:1,roughness:.22});
